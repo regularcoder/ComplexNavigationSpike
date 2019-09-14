@@ -1,37 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Fragment} from 'react';
+import React from 'react';
+import {SafeAreaView, createAppContainer} from 'react-navigation';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from 'react-navigation-tabs';
+import HomeScreen from './src/screens/HomeScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
+import Nav1Screen from './src/screens/TopTabScreens/Nav1Screen';
+import Nav2Screen from './src/screens/TopTabScreens/Nav2Screen';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const SafeAreaMaterialTopTabBar = ({...props}) => (
+  <SafeAreaView>
+    <MaterialTopTabBar {...props} />
+  </SafeAreaView>
+);
 
-import {createAppContainer} from 'react-navigation';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
-import HomeScreen from './src/screens/HomeScreen'
-import SettingsScreen from './src/screens/SettingsScreen'
+const options = {
+  tabBarComponent: props => <SafeAreaMaterialTopTabBar {...props} />,
+};
 
-const TabNavigator = createBottomTabNavigator({
+const TopTabNavigator = createMaterialTopTabNavigator(
+  {
+    Nav1: Nav1Screen,
+    Nav2: Nav2Screen,
+  },
+  options,
+);
+
+const BottomTabNavigator = createBottomTabNavigator({
   Home: HomeScreen,
   Settings: SettingsScreen,
+  TopTabs: TopTabNavigator,
 });
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(BottomTabNavigator);
